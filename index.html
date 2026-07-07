@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Request Example</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    #user-card { border: 1px solid #ccc; padding: 15px; margin-top: 15px; width: 250px; }
+    .error { color: red; }
+  </style>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+<body>
+
+  <h1>Frontend API Demo</h1>
+  <input type="number" id ="id" placeholder="Enter User ID" />
+  <button id="fetch-btn">Load User Data</button>
+  <div id="output-container">
+    <p>Click the button to load data.</p>
+  </div>
+
+</body>
+ <script>
+    // 1. Select the HTML elements we need to interact with
+    const button = document.getElementById('fetch-btn');
+    const container = document.getElementById('output-container');
+
+    // 2. Define the asynchronous API function
+    async function loadUserData() {
+        const userId = document.getElementById('id').value;
+        if(!userId){
+            message = "Please enter a valid user ID.";
+            container.innerHTML = `<p class="error">${message}</p>`;
+            return;
+        } // Example user ID to fetch
+      const url = `http://localhost:5000/users/${userId}`; // Replace with your actual API endpoint
+      try {
+        const response = await fetch(url,
+            {
+                method:'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            }
+        );
+      
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        container.innerHTML = `
+          <div id="user-card">
+            <h1 >${data.user.name}</h1>
+            <h3>${data.user.age}</h3>
+          </div>
+        `;
+
+      } catch (error) {
+        container.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+      }
+    }
+
+    // 4. Attach the event listener to trigger the function on click
+    button.addEventListener('click', loadUserData);
+  </script>
+</html>
