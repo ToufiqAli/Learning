@@ -1,43 +1,15 @@
-// This is ur Database MongooseDB or SQL DB
-
-const users = require ('../model/user')
-
-
-// Controller functions
-const getAllProducts = (req, res) =>{
-    if(!Products){
-        res.status(404).json({
-            Status : "Not Found",
-            message : "No Products Found"
-
-        })
-    }
-        else{
-            res.status(200).json({
-                Status : "Success",
-                data : Products
-            })
-
-
-        }
-}
+const User = require ('../model/user')
 
 const getAllUsers = async (req, res) => {
     // 1. Change the result variable name to allUsers
     // 2. Ensure your model name matches your import (e.g., User)
-    const allUsers = await users.find(); 
+    const allUsers = await User.find(); 
     
     res.status(200).json({
         status: "Success",
         users: allUsers
     });
 };
-
-
-
-
-
-
 
 const createUser = async (req, res) => {
    const { 
@@ -58,12 +30,12 @@ const createUser = async (req, res) => {
         } = req.body;
 try{
 
-    const existinguser = await users.findOne({email})
+    const existinguser = await User.findOne({email})
     if(existinguser)
     {
     return res.status(400).json({ message: 'User with this username already exists for this application' });
     }
-  const user = await users.create({
+  const user = await User.create({
             Name: {
                 Fristname:Name.Fristname,
                 LastName:Name.LastName
@@ -86,49 +58,21 @@ try{
         });
 
     user.save();
-     res.status(201).json({ message: 'User created successfully', users });
+     res.status(201).json({ message: 'User created successfully', user });
 
 }catch(error){
      console.error("Error in createUser:", error);
         res.status(500).json({ message: 'Internal Server Error', error: error.message, stack: error.stack });
     }
 
-
-
 }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const fetchoneuser = async (req, res) => {
-// 1. Destructure the ID from request parameters
 const { username } = req.params;
-
-// 2. Capitalize and use the correct Model name (User)
-// 3. Keep the output variable lowercase (user)
-const user = await users.findOne({ username });
-
-
+const user = await User.findOne({ username });
 
 
     if(!user){
@@ -147,32 +91,82 @@ const user = await users.findOne({ username });
 }
 
 
-const updateUser = (req, res) => {
-    const {id} = req.params;
-    const {name, age} = req.body;
-    const user = users[`user${id}`];
+const updateUser = async (req, res) => {
+    try {
+        const { userid } = req.params;
+        
+        // 1. Safely extract all variables from req.body
+        const { 
+            Name, 
+            password, 
+            email, 
+            username,
+            country, 
+            state, 
+            city, 
+            area, 
+            Phoneno, 
+            status, 
+            wishlist, 
+            Orders, 
+            Notifications, 
+            orderhistory 
+        } = req.body;
 
-    if(!user){
-        res.status(404).json({
-            Status : "Failed",
-            message : "User not found"
-        })
-    }
-    else{
-        if(name){
-            user.name = name;
-            user.age = age;
+        // 2. Build the updated fields object safely
+        const updateData = {
+            username,
+            password,
+            email,
+            username,
+            Phoneno,
+            status,
+            wishlist,
+            Orders,
+            Notifications,
+            orderhistory,
+            // Rebuild nested fields only if they exist in the incoming request
+            ...(Name && { Name: { Fristname: Name.Fristname, LastName: Name.LastName } }),
+            ...((country || state || city || area) && {
+                location: { country, state, city, area }
+            })
+        };
+
+        // 3. Find and update using the correct capitalized Model name (User)
+        // { new: true } returns the updated document, { runValidators: true } keeps database rules active
+        const updatedUser = await User.findOneAndUpdate(
+            { userid }, 
+            { $set: updateData }, 
+            { new: true, runValidators: true }
+        );
+
+        // 4. Return an error if the user profile wasn't found
+        if (!updatedUser) {
+            return res.status(404).json({
+                Status: "Failed",
+                message: "User not found"
+            });
         }
-        res.status(200).json({
-            Status : "Success",
-            data : users
-        })
+
+        // 5. Send back the updated document data
+        res.status(200).json({ 
+            Status: "Success",
+            message: 'User Updated successfully', 
+            user: updatedUser 
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            Status: "Failed",
+            message: error.message
+        });
     }
-}
+};
+
 
 const deleteUser = (req, res) => {
     const {id} = req.params;
-    const user =users[`user${id}`];
+    const user =User[`user${id}`];
     if(!user){
         res.status(404).json({
             Status : "Failed",
@@ -180,10 +174,10 @@ const deleteUser = (req, res) => {
         })
     }
     else{
-        delete users[`user${id}`];
+        delete User[`user${id}`];
         res.status(200).json({
             Status : "Success",
-            data : users
+            data : User
         })
     }}
 
@@ -195,7 +189,6 @@ const deleteUser = (req, res) => {
 
 
 module.exports = {
-   getAllProducts,
    getAllUsers,
     createUser,
     fetchoneuser,
