@@ -14,7 +14,7 @@ const user = require('../Controllers/user.controller');
 
 
 
-router.get('/abc', user.getAllUsers);
+router.get('/', user.getAllUsers);
 router.post('/create/', user.createUser);
 
 // localhost:5000/users/
@@ -43,7 +43,7 @@ router.post('/create/', user.createUser);
 
 
 
-router.get('/:id', user.fetchoneuser);
+router.get('/:username', user.fetchoneuser);
 // router.put('/:id', user.updateUser);
 // router.delete('/:id', user.deleteUser);
 

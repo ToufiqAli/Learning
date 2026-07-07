@@ -120,10 +120,16 @@ try{
 
 
 
-const fetchoneuser = (req, res) => {
-    const {id} = req.params;
+const fetchoneuser = async (req, res) => {
+// 1. Destructure the ID from request parameters
+const { username } = req.params;
 
-    const user = users[`user${id}`];
+// 2. Capitalize and use the correct Model name (User)
+// 3. Keep the output variable lowercase (user)
+const user = await users.findOne({ username });
+
+
+
 
     if(!user){
         res.status(404).json({
