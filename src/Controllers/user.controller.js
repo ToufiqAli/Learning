@@ -93,29 +93,14 @@ const user = await User.findOne({ username });
 
 const updateUser = async (req, res) => {
     try {
-        const { userid } = req.params;
+        const username = req.params;
         
         // 1. Safely extract all variables from req.body
-        const { 
-            Name, 
-            password, 
-            email, 
-            username,
-            country, 
-            state, 
-            city, 
-            area, 
-            Phoneno, 
-            status, 
-            wishlist, 
-            Orders, 
-            Notifications, 
-            orderhistory 
-        } = req.body;
+        const data = req.body;
 
         // 2. Build the updated fields object safely
         const updateData = {
-            username,
+
             password,
             email,
             username,
@@ -135,7 +120,7 @@ const updateUser = async (req, res) => {
         // 3. Find and update using the correct capitalized Model name (User)
         // { new: true } returns the updated document, { runValidators: true } keeps database rules active
         const updatedUser = await User.findOneAndUpdate(
-            { userid }, 
+            { username }, 
             { $set: updateData }, 
             { new: true, runValidators: true }
         );
@@ -164,9 +149,10 @@ const updateUser = async (req, res) => {
 };
 
 
-const deleteUser = (req, res) => {
-    const {id} = req.params;
-    const user =User[`user${id}`];
+const deleteUser = async (req, res) => {
+    const {username} = req.params;
+    const user = await User.findOneAndDelete({username})
+
     if(!user){
         res.status(404).json({
             Status : "Failed",
@@ -174,18 +160,12 @@ const deleteUser = (req, res) => {
         })
     }
     else{
-        delete User[`user${id}`];
         res.status(200).json({
             Status : "Success",
-            data : User
+            message : "User has Been Deleted"
         })
+        
     }}
-
-
-
-
-
-
 
 
 module.exports = {
