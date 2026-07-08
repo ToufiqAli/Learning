@@ -46,6 +46,22 @@ class ProductService {
         
     }
 
+    async UpdateProduct(productId,updateData){
+        const product = await Product.findOne(productId);
+                if(!product){
+            throw new error ("The Product is Not There");
+                
+        }else{
+            const updateproduct = await Product.updateOne(
+            productId,
+            { $set: updateData }, 
+            { new: true, runValidators: true }
+
+            )
+            return updateproduct;
+        }
+    }
+
 }
 
 module.exports = new ProductService();

@@ -48,6 +48,21 @@ class ProductController {
         
     }
 
+    async UpdateProduct(req,res,next){
+        try{
+        const Product = await ProductService.UpdateProduct(req.params,req.body);            
+ 
+               return res.status(200).json({
+                Status:"Success",
+                message:"The Product Data has Been Updated",
+                data : Product
+            })
+        }catch(error)
+        {
+            next(error);
+        }
+    }
+
 
     }
 
