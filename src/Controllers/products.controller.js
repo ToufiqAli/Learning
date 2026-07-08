@@ -32,7 +32,24 @@ class ProductController {
             next(error);
         }
         }
+        
+    async GetOneProduct(req,res,next){
+        try{
+            const Product = await ProductService.GetOneProduct(req.params);            
+        
+            return res.status(200).json({
 
-}
+                Status:"Success",
+                data : Product
+            })
+        }catch(error){
+            next(error)
+        }
+        
+    }
+
+
+    }
+
 
 module.exports = new ProductController();

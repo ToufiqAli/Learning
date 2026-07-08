@@ -33,6 +33,18 @@ class ProductService {
             return products;
         }
     }
+ 
+    async GetOneProduct(productId){
+        const product = await Product.findOne(productId);
+        if(!product){
+            throw new error ("The Product is Not There");
+                
+        }
+        else{
+            return product;
+        }
+        
+    }
 
 }
 
