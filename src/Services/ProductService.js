@@ -5,7 +5,6 @@ class ProductService {
     async createProduct(data) {
         const products = await Product.find({});
         const productId = `Pro${products.length+1}`;
-        console.log(productId)
         const existingProduct = await Product.findOne({
             productId: productId
         });
@@ -73,6 +72,18 @@ class ProductService {
     }
 
 }
+
+    async DeleteAllProducts(){
+        try{
+            const products = await Product.deleteMany({});
+            return products;
+
+
+        }catch(error){
+            return error;
+        }
+
+    }
 }
 
 module.exports = new ProductService();
