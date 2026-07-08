@@ -19,6 +19,19 @@ class ProductController {
         }
 
     }
+    async GetProducts(req,res,next){
+        try{
+            const Products = await ProductService.GetProducts();
+
+            return res.status(200).json({
+
+                Status:"Success",
+                data : Products
+            })
+        }catch(error){
+            next(error);
+        }
+        }
 
 }
 

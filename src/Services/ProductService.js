@@ -24,6 +24,16 @@ class ProductService {
         return product;
     }
 
+    async GetProducts(){
+        const products = await Product.find({});
+        if(!products){
+            return "There is No Products Available Currently";
+        }
+        else{
+            return products;
+        }
+    }
+
 }
 
 module.exports = new ProductService();
