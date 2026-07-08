@@ -4,7 +4,7 @@ class ProductService {
 
     async createProduct(data) {
         const products = await Product.find({});
-        const productId = `Pro${products.length}`;
+        const productId = `Pro${products.length+1}`;
         console.log(productId)
         const existingProduct = await Product.findOne({
             productId: productId
@@ -61,7 +61,18 @@ class ProductService {
             return updateproduct;
         }
     }
+    
+    async DeleteProduct(productId){
+               const product = await Product.findOne(productId);
+                if(!product){
+            throw new error ("The Product is Not There");
+                
+        }else{
+            const deletedProduct = await Product.deleteOne(productId);
+            return deletedProduct
+    }
 
+}
 }
 
 module.exports = new ProductService();
