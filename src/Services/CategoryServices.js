@@ -40,6 +40,21 @@ class categoryServices{
             return category
         }
     }
+
+    async UpdateCategory(categoryId,data){
+
+        const category = await categoryModel.findOneAndUpdate(
+            categoryId,
+            {$set : data},
+           { new: true, runValidators: true }
+        )
+        if(!category){
+            throw new Error("Category ID is InValid");
+        }
+        return category;
+
+
+    }
 }
 
 module.exports = new categoryServices();

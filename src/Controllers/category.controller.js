@@ -30,7 +30,19 @@ class categoryController{
     }
         async GetCategory(req,res,next){
           try{
-        const data = await categoryServices.GetCategory(req.body);
+        const data = await categoryServices.GetCategory(req.params);
+        res.status(200).json({
+            Status : "Success",
+            Category: data
+        })
+        }catch(error){
+        next(error);
+        }
+
+    }
+        async UpdateCategory(req,res,next){
+        try{
+        const data = await categoryServices.UpdateCategory(req.params,req.body);
         res.status(200).json({
             Status : "Success",
             Category: data

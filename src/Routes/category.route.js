@@ -4,7 +4,8 @@ const router = require ('express').Router();
 
 router.post('/create',categoryController.createCategory);
 router.get('/',categoryController.getAllCategory);
-router.get('/:id',categoryController.GetCategory);
+router.get('/:categoryId',categoryController.GetCategory);
+router.put('/:categoryId',categoryController.UpdateCategory);
 
 
 module.exports = router

@@ -50,20 +50,21 @@ const addCategory = await Category.findOneAndUpdate(
     }
 
     async UpdateProduct(productId,updateData){
-        const product = await Product.findOne(productId);
-                if(!product){
-            throw new error ("The Product is Not There");
-                
-        }else{
+       
             const updateproduct = await Product.updateOne(
             productId,
             { $set: updateData }, 
             { new: true, runValidators: true }
 
             )
+              if(!updateproduct){
+            throw new error ("The Category is Not Present");
+        }
+
             return updateproduct;
         }
-    }
+    
+
     
     async DeleteProduct(productId){
                const product = await Product.findOne(productId);
