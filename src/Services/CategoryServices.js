@@ -64,18 +64,18 @@ class categoryServices{
     }
 
     async DeleteCategory(categoryId) {
-    const category = await categoryModel.findOne(categoryId);
+    const category = await categoryModel.findOne({_id:categoryId.categoryId});
     if (!category) {
         throw new Error("Category ID is invalid");
     }
 
     // 2. Delete all associated products in a single database query
     if (category.Products && category.Products.length > 0) {
-        await ProductModel.deleteMany({ productId: { $in: category.Products } });
+        await ProductModel.deleteMany({ _id: { $in: category.Products } });
     }
 
     // 3. Delete the category itself
-    await categoryModel.findOneAndDelete( categoryId );
+    await categoryModel.findOneAndDelete( {_id:categoryId.categoryId} );
 
     return category;
 }
