@@ -59,7 +59,7 @@ const addCategory = await Category.findOneAndUpdate(
 
     async UpdateProduct(productId,updateData){
        
-            const updateproduct = await Product.updateOne(
+            const updateproduct = await Product.findOneAndUpdate(
             {_id:productId.productId},
             { $set: updateData }, 
             { new: true, runValidators: true }

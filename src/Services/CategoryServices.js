@@ -1,5 +1,6 @@
 const categoryModel = require('../model/category');
 const ProductModel = require('../model/products');
+const crypto = require('crypto');
 
 
 class categoryServices{
@@ -78,6 +79,12 @@ class categoryServices{
     await categoryModel.findOneAndDelete( {_id:categoryId.categoryId} );
 
     return category;
+}
+
+async DeleteAllCategories(){
+    await ProductModel.deleteMany({});
+    const result = await categoryModel.deleteMany({});
+    return result
 }
 
 

@@ -65,6 +65,18 @@ class categoryController{
         }
 
     }
+    async DeleteAllCategories(req,res,next){
+        try{
+        const data = await categoryServices.DeleteAllCategories();
+        res.status(200).json({
+            Status : "Success",
+            Message: "The Categories Has Been Deleted Successfully"
+        })
+        }catch(error){
+        next(error);
+        }
+
+    }
 
 
 
