@@ -1,4 +1,6 @@
 const categoryModel = require('../model/category');
+const ProductModel = require('../model/products');
+
 
 class categoryServices{
 
@@ -28,7 +30,12 @@ class categoryServices{
 
     async getAllCategory(){
         const categorys = await categoryModel.find({});
-        return categorys
+        if(!categorys){
+            return "The Category is Not There !!"
+        }
+        else{
+            return categorys
+        }
     }
 
     async GetCategory(categoryId){
@@ -55,6 +62,28 @@ class categoryServices{
 
 
     }
+
+    async DeleteCategory(categoryId) {
+    const category = await categoryModel.findOne(categoryId);
+    if (!category) {
+        throw new Error("Category ID is invalid");
+    }
+
+    // 2. Delete all associated products in a single database query
+    if (category.Products && category.Products.length > 0) {
+        await ProductModel.deleteMany({ productId: { $in: category.Products } });
+    }
+
+    // 3. Delete the category itself
+    await categoryModel.findOneAndDelete( categoryId );
+
+    return category;
+}
+
+
+
+
+
 }
 
 module.exports = new categoryServices();

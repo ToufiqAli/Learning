@@ -40,12 +40,25 @@ class categoryController{
         }
 
     }
-        async UpdateCategory(req,res,next){
+    async UpdateCategory(req,res,next){
         try{
         const data = await categoryServices.UpdateCategory(req.params,req.body);
         res.status(200).json({
             Status : "Success",
             Category: data
+        })
+        }catch(error){
+        next(error);
+        }
+
+    }
+
+    async DeleteCategory(req,res,next){
+        try{
+        const data = await categoryServices.DeleteCategory(req.params);
+        res.status(200).json({
+            Status : "Success",
+            Message: "The Category Has Been Deleted Successfully"
         })
         }catch(error){
         next(error);

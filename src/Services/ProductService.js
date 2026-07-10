@@ -9,6 +9,7 @@ class ProductService {
         const existingProduct = await Product.findOne({
             productId: productId
         });
+         data.productId = productId;
 
         if (existingProduct) {
             throw new Error("Product ID already exists");
@@ -17,13 +18,17 @@ class ProductService {
         if (data.sellingPrice > data.originalPrice) {
             throw new Error("Selling price cannot be greater than original price");
         }
-        data.productId = productId;
-        const product = await Product.create( data);
-const addCategory = await Category.findOneAndUpdate(
-  { categoryId: product.category }, 
-  { $push: { Products: product._id } },
-  { new: true } // Returns the updated document
-);
+        const addCategory = await Category.findOneAndUpdate(
+        { categoryId: data.category }, 
+        { $push: { Products:data.productId} },
+        { new: true } // Returns the updated document
+        );
+        if(!addCategory){
+            throw new Error ("First Create the Category");
+        }
+
+
+        const product = await Product.create(data);
         return product;
     }
 
@@ -58,7 +63,7 @@ const addCategory = await Category.findOneAndUpdate(
 
             )
               if(!updateproduct){
-            throw new error ("The Category is Not Present");
+            throw new Error ("The Product is Not Present");
         }
 
             return updateproduct;

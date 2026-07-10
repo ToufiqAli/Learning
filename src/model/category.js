@@ -42,8 +42,9 @@ const CategorySchema = new mongoose.Schema(
     },
 
     Products: [{
-      type: mongoose.Schema.Types.ObjectId,
+      type:String,
       ref: "products",
+      uppercase:true,
       default: null,
     }],
 
