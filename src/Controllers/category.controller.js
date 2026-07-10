@@ -5,10 +5,10 @@ class categoryController{
 
     async createCategory(req,res,next){
         try{
-        const data = await categoryServices.createCategory(req.body);
+        const Category = await categoryServices.createCategory(req.body);
         res.status(200).json({
             Status : "Success",
-            Category: data
+            Category
         })
         }catch(error){
         next(error);
@@ -18,10 +18,10 @@ class categoryController{
 
     async getAllCategory(req,res,next){
           try{
-        const data = await categoryServices.getAllCategory();
+        const Categories = await categoryServices.getAllCategory();
         res.status(200).json({
             Status : "Success",
-            Categorys: data
+            Categories
         })
         }catch(error){
         next(error);
@@ -30,10 +30,10 @@ class categoryController{
     }
         async GetCategory(req,res,next){
           try{
-        const data = await categoryServices.GetCategory(req.params);
+        const Category = await categoryServices.GetCategory(req.params);
         res.status(200).json({
             Status : "Success",
-            Category: data
+          Category
         })
         }catch(error){
         next(error);
@@ -42,10 +42,10 @@ class categoryController{
     }
     async UpdateCategory(req,res,next){
         try{
-        const data = await categoryServices.UpdateCategory(req.params,req.body);
+        const Category = await categoryServices.UpdateCategory(req.params,req.body);
         res.status(200).json({
             Status : "Success",
-            Category: data
+            Category
         })
         }catch(error){
         next(error);

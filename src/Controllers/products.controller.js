@@ -1,4 +1,4 @@
-const ProductService = require("../services/ProductService");
+const ProductService = require("../Services/ProductService");
 
 class ProductController {
 
@@ -11,7 +11,7 @@ class ProductController {
             return res.status(201).json({
                 success: true,
                 message: "Product created successfully",
-                data: product
+              product
             });
 
         } catch (error) {
@@ -26,7 +26,7 @@ class ProductController {
             return res.status(200).json({
 
                 Status:"Success",
-                data : Products
+                Products
             })
         }catch(error){
             next(error);
@@ -40,7 +40,7 @@ class ProductController {
             return res.status(200).json({
 
                 Status:"Success",
-                data : Product
+               Product
             })
         }catch(error){
             next(error)
@@ -55,7 +55,7 @@ class ProductController {
                return res.status(200).json({
                 Status:"Success",
                 message:"The Product Data has Been Updated",
-                data : Product
+                Product
             })
         }catch(error)
         {
