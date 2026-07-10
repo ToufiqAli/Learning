@@ -1,4 +1,5 @@
 const Product = require("../model/products");
+const Category = require('../model/category');
 
 class ProductService {
 
@@ -17,9 +18,12 @@ class ProductService {
             throw new Error("Selling price cannot be greater than original price");
         }
         data.productId = productId;
-        const product = await Product.create(  data
-        );
-
+        const product = await Product.create( data);
+const addCategory = await Category.findOneAndUpdate(
+  { categoryId: product.category }, 
+  { $push: { Products: product._id } },
+  { new: true } // Returns the updated document
+);
         return product;
     }
 

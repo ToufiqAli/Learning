@@ -41,11 +41,11 @@ const CategorySchema = new mongoose.Schema(
       default: "",
     },
 
-    parentCategory: {
+    Products: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      ref: "products",
       default: null,
-    },
+    }],
 
     level: {
       type: Number,

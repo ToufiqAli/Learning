@@ -1,23 +1,25 @@
-// npm init -y initialize a new Node.js project
-// npm install Express mongoose dotenv
-
-
-
-
 
 const express = require('express');
 const cors = require('cors');
 const ConnectDB = require('./config/db');
-const app = express();
+
+
 const userRoutes = require('./Routes/user.route');
-const ProductRoutes = require('./Routes/products.route');
+const categoryRoutes = require ('./Routes/category.route');
+const productRoutes = require('./Routes/products.route');
+
 
 ConnectDB();
+
+
+const app = express();
+
 
 app.use(express.json());
 app.use(cors());
 app.use('/users', userRoutes);
-app.use('/products',ProductRoutes);
+app.use('/category', categoryRoutes)
+app.use('/products',productRoutes);
 
 
 
