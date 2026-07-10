@@ -21,6 +21,11 @@ class categoryServices{
             return newCategory;
 
     }
+
+    async getAllCategory(){
+        const categorys = await categoryModel.find({});
+        return categorys
+    }
 }
 
 module.exports = new categoryServices();
