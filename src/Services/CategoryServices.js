@@ -18,6 +18,10 @@ class categoryServices{
         
         data.categoryId = categoryId;
             const newCategory = await categoryModel.create(data);
+            if(!newCategory){
+                return "The Category is Not There !!"
+
+            }
             return newCategory;
 
     }
@@ -25,6 +29,16 @@ class categoryServices{
     async getAllCategory(){
         const categorys = await categoryModel.find({});
         return categorys
+    }
+
+    async GetCategory(categoryId){
+        const category = await categoryModel.findOne(categoryId);
+        if(!category){
+            return "The Category is Not There !!"
+        }
+        else{
+            return category
+        }
     }
 }
 

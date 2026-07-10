@@ -28,6 +28,19 @@ class categoryController{
         }
 
     }
+        async GetCategory(req,res,next){
+          try{
+        const data = await categoryServices.GetCategory(req.body);
+        res.status(200).json({
+            Status : "Success",
+            Category: data
+        })
+        }catch(error){
+        next(error);
+        }
+
+    }
+
 
 
 
