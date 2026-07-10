@@ -1,11 +1,12 @@
 const Product = require("../model/products");
 const Category = require('../model/category');
+const crypto = require('crypto');
 
 class ProductService {
 
     async createProduct(data) {
         const products = await Product.find({});
-        const productId = `Pro${products.length+1}`;
+        const productId = `Pro_${crypto.randomBytes(4).toString('hex')}`;   
         const existingProduct = await Product.findOne({
             productId: productId
         });
@@ -45,7 +46,7 @@ const addCategory = await Category.findOneAndUpdate(
     }
  
     async GetOneProduct(productId){
-        const product = await Product.findOne(productId);
+        const product = await Product.findOne({_id:productId.productId});
         if(!product){
             throw new error ("The Product is Not There");
                 
@@ -59,7 +60,7 @@ const addCategory = await Category.findOneAndUpdate(
     async UpdateProduct(productId,updateData){
        
             const updateproduct = await Product.updateOne(
-            productId,
+            {_id:productId.productId},
             { $set: updateData }, 
             { new: true, runValidators: true }
 
@@ -74,12 +75,17 @@ const addCategory = await Category.findOneAndUpdate(
 
     
     async DeleteProduct(productId){
-               const product = await Product.findOne(productId);
+            const product = await Product.findOne({_id:productId.productId});
                 if(!product){
             throw new error ("The Product is Not There");
                 
         }else{
-            const deletedProduct = await Product.deleteOne(productId);
+            await Category.findOneAndUpdate(
+                {_id:product.category},
+                {$pull: {Products:productId.productId} }
+            )
+            
+            const deletedProduct = await Product.deleteOne({_id:productId.productId});
             return deletedProduct
     }
 
@@ -87,9 +93,12 @@ const addCategory = await Category.findOneAndUpdate(
 
     async DeleteAllProducts(){
         try{
-            const products = await Product.deleteMany({});
-            return products;
-
+            await Category.updateMany(
+                {},
+                {$set:{Products:[]}}
+            )
+            const result = await Product.deleteMany({});
+            return result;
 
         }catch(error){
             return error;

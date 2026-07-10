@@ -6,7 +6,7 @@ class categoryServices{
 
     async createCategory(data){
         const categorys = await categoryModel.find({});
-        const categoryId = `CAT${categorys.length+1}`
+        const categoryId = `CAT_${crypto.randomBytes(4).toString('hex')}`;
    
     
 
@@ -15,7 +15,7 @@ class categoryServices{
         });
         
         if (existingCategory) {
-            throw new Error("Product ID already exists");
+            throw new Error("Category ID already exists");
         }
         
         data.categoryId = categoryId;
@@ -39,7 +39,7 @@ class categoryServices{
     }
 
     async GetCategory(categoryId){
-        const category = await categoryModel.findOne(categoryId);
+        const category = await categoryModel.findOne({_id:categoryId.categoryId});
         if(!category){
             return "The Category is Not There !!"
         }
@@ -51,7 +51,7 @@ class categoryServices{
     async UpdateCategory(categoryId,data){
 
         const category = await categoryModel.findOneAndUpdate(
-            categoryId,
+            {_id:categoryId.categoryId},
             {$set : data},
            { new: true, runValidators: true }
         )
@@ -71,7 +71,7 @@ class categoryServices{
 
     // 2. Delete all associated products in a single database query
     if (category.Products && category.Products.length > 0) {
-        await ProductModel.deleteMany({ _id: { $in: category.Products } });
+        await ProductModel.deleteMany({ _id: { $in: category.Products } },{ returnDocument: 'after' } );
     }
 
     // 3. Delete the category itself
