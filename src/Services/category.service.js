@@ -6,7 +6,6 @@ const crypto = require('crypto');
 class categoryServices{
 
     async createCategory(data){
-        const categorys = await categoryModel.find({});
         const categoryId = `CAT_${crypto.randomBytes(4).toString('hex')}`;
    
     
