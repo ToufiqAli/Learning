@@ -7,6 +7,7 @@ const productsController = require("../Controllers/products.controller");
 router.post("/create", ProductController.createProduct);
 router.get("/",productsController.GetProducts);
 router.get("/:productId",ProductController.GetOneProduct);
+router.get("/categories/:categoryId", ProductController.GetProductsOfCategory);
 router.put("/:productId",ProductController.UpdateProduct);
 router.delete("/:productId",ProductController.DeleteProduct);
 router.delete("/",ProductController.DeleteAllProducts);

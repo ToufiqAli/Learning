@@ -44,6 +44,19 @@ const addCategory = await Category.findOneAndUpdate(
             return products;
         }
     }
+    async GetProductsOfCategory(categoryId){
+
+        const products = await Product.find({
+            category : categoryId.categoryId                                                                                    
+        })
+         if(!products){
+            return "There is No Products Available Currently";
+        }
+        else{
+            return products;
+        }
+
+    }
  
     async GetOneProduct(productId){
         const product = await Product.findOne({_id:productId.productId});

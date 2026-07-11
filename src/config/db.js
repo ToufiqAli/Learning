@@ -6,7 +6,7 @@ const ConnectDB = async () =>{
         // Add this line where you set up your mongoose connection configuration
     mongoose.set('autoIndex', true); 
 
-    const connect = await mongoose.connect(process.env.MONGOOSE_URL);
+    const connect = await mongoose.connect(process.env.MONGODB_URI);
     console.log(`The DB is Connected To ${connect.connection.host}`);
     }catch(error){
         console.log(`${error}`);
