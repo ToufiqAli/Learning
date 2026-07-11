@@ -20,6 +20,24 @@ class EmployeeController{
             next(error)
         }
     }
+    async getOneEmployees(req,res,next){
+        try{
+            const Employee = await employeeServices.getOneEmployees(req.params);
+            if(!Employee){
+                res.status(404).json({
+                    status : "Not Found",
+                    message: "Employees are not There "
+                })
+            }else{
+                res.status(200).json({
+                    status: "Success",
+                    Employee
+                })
+            }
+        }catch(error){
+            next(error)
+        }
+    }
        async CreateEmployee(req,res,next){
         try{
             const Employee = await employeeServices.CreateEmployee(req.body);

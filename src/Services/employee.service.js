@@ -18,6 +18,10 @@ class EmployeeServices{
 
 
     }
+    async getOneEmployees(employeeId){
+        const employee = await employeeModel.findOne({_id:employeeId.employeeId});
+        return employee
+    }
 
     async getAllEmployees(){
         const employee = await employeeModel.find({});
