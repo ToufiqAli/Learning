@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require('bcrypt');
 
 const EmployeeSchema = new mongoose.Schema(
   {
@@ -151,5 +152,18 @@ const EmployeeSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+EmployeeSchema.methods.comparePassword = async function (password) {
+  if (!this.password) {
+        throw new Error("Password hash is missing from the database document.");
+    }
+    return await bcrypt.compare(password, this.password);
+}
+
+
+
+EmployeeSchema.statics.hashPassword = async function (password) {
+    return await bcrypt.hash(password, 10);
+}
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
