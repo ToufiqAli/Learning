@@ -9,7 +9,10 @@ class orderServices{
         const createorder = await orderScheme.create(order);
         return createorder
     }
-    async GetOneOrder(OrderId){
-        const order = await orderScheme.findOne({_id:OrderId.OrderId})
+    async GetOneOrder(orderId){
+        const order = await orderScheme.findOne({_id:orderId.orderId})
+        return order
     }
 }
+
+module.exports = new orderServices

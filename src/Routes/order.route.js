@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const orderController = require('../Controllers/orders.controller')
 
-router('/',orderController.GetOneOrder)
-router('/create',orderController.orderCreate)
+router.get('/:orderId',orderController.GetOneOrder)
+router.post('/create',orderController.orderCreate)
 
 module.exports = router
