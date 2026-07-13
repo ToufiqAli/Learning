@@ -8,6 +8,7 @@ const employeeRouter = require('./Routes/employee.route');
 const userRoutes = require('./Routes/user.route');
 const categoryRoutes = require ('./Routes/category.route');
 const productRoutes = require('./Routes/products.route');
+const orderRoutes = require('./Routes/order.route')
 
 
 
@@ -24,6 +25,7 @@ app.get('/',(req,res)=>{
 app.use(express.json());
 app.use(cors());
 app.use('/employee', employeeRouter);
+app.use('/order',orderRoutes)
 app.use('/users', userRoutes);
 app.use('/category', categoryRoutes)
 app.use('/products',productRoutes);

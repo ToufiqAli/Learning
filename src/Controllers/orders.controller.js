@@ -28,4 +28,10 @@ class OrderController{
 
 
     }
+    async GetOneOrder(req,res,next){
+        const order = orderservice.GetOneOrder(req.params);
+        return order
+    }
 }
+
+module.exports = new OrderController
