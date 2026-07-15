@@ -1,5 +1,7 @@
 const User = require ('../model/user')
 
+
+class 
 const getAllUsers = async (req, res) => {
     // 1. Change the result variable name to allUsers
     // 2. Ensure your model name matches your import (e.g., User)

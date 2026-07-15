@@ -56,6 +56,8 @@ const AddressSchema = new mongoose.Schema(
   { _id: false }
 );
 
+
+
 const UserSchema = new mongoose.Schema(
   {
     customerId: {
@@ -124,6 +126,7 @@ const UserSchema = new mongoose.Schema(
     },
 
     addresses: [AddressSchema],
+
 
     emailVerified: {
       type: Boolean,
