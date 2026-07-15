@@ -1,5 +1,5 @@
-const Product = require("../model/products");
-const Category = require('../model/category');
+const Product = require("../Model/products");
+const Category = require('../Model/category');
 const crypto = require('crypto');
 
 class ProductService {

@@ -58,7 +58,7 @@ const AddressSchema = new mongoose.Schema(
 
 
 
-const UserSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     customerId: {
       type: String,
@@ -175,5 +175,4 @@ const UserSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', userSchema);

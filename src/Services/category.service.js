@@ -1,5 +1,5 @@
-const categoryModel = require('../model/category');
-const ProductModel = require('../model/products');
+const categoryModel = require('../Model/category');
+const ProductModel = require('../Model/products');
 const crypto = require('crypto');
 
 
