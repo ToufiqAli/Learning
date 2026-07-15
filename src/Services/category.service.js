@@ -60,7 +60,6 @@ class categoryServices{
         }
         return category;
 
-
     }
 
     async DeleteCategory(categoryId) {
