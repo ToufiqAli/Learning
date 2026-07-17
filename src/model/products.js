@@ -223,4 +223,5 @@ const ProductSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Product", ProductSchema);
+// Prevent OverwriteModelError by checking if model already exists
+module.exports = mongoose.models.Product || mongoose.model("Product", ProductSchema);

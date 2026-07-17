@@ -56,9 +56,7 @@ const AddressSchema = new mongoose.Schema(
   { _id: false }
 );
 
-
-
-const userSchema = new mongoose.Schema(
+const userScheme = new mongoose.Schema(
   {
     customerId: {
       type: String,
@@ -127,7 +125,6 @@ const userSchema = new mongoose.Schema(
 
     addresses: [AddressSchema],
 
-
     emailVerified: {
       type: Boolean,
       default: false,
@@ -175,4 +172,7 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-module.exports = mongoose.model('User', userSchema);
+
+
+// Prevent OverwriteModelError by checking if model already exists
+module.exports = mongoose.models.users || mongoose.model("users", userScheme);
